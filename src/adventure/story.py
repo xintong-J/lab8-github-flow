@@ -25,7 +25,7 @@ def sstyle(text, style):
     console.print(text, style=style)
 def cstyle():
     otext = Text()
-    otext.append("Which direction do you choose?", style="italic blue")
+    otext.append("Which direction do you choose?", style="bold blue")
     otext.append("(left/right/exit)", style = "italic magenta")
     otext.append(": ", style="italic black")
     console.print(otext)
