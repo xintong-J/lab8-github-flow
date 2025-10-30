@@ -1,6 +1,10 @@
 from adventure.utils import read_events_from_file
 import random
+from rich import print
+from rich.console import Console
+from rich.text import Text
 
+console = Console()
 def step(choice: str, events):
     random_event = random.choice(events)
 
@@ -17,14 +21,30 @@ def left_path(event):
 def right_path(event):
     return "You walk right. " + event
 
+def sstyle(text, style):
+    console.print(text, style=style)
+def cstyle():
+    otext = Text()
+    otext.append("Which direction do you choose?", style="italic blue")
+    otext.append("(left/right/exit)", style = "italic magenta")
+    otext.append(": ", style="italic black")
+    console.print(otext)
+
 if __name__ == "__main__":
     events = read_events_from_file('events.txt')
 
-    print("You wake up in a dark forest. You can go left or right.")
+    sstyle("You wake up in a dark forest. You can go left or right.", "italic red")
     while True:
-        choice = input("Which direction do you choose? (left/right/exit): ")
-        choice = choice.strip().lower()
+        cstyle()
+        choice = input().strip().lower()
         if choice == 'exit':
+            sstyle("Exit!!!", "italic green")
             break
-        
+        result = step(choice, events)
+        if "left" in result.lower():
+            sstyle(result, "yellow")
+        elif "right" in result.lower():
+            sstyle(result, "purple4")
+        else:
+            sstyle(result,"cyan")
         print(step(choice, events))
